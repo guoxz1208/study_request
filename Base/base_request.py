@@ -15,19 +15,29 @@ from Common.handle_json import HandJson
 class BaseRequest:
 
     def send_get(self,url,params=None,headers=None,cookie=None,get_cookie=None,token=None,get_token=None):
-        response = requests.get(url=url,data=params,headers=headers,cookies=cookie,verify=False)
+        if token != None:
+            headers["token"] = token
+            print(headers)
+            response = requests.get(url=url,data=params,headers=headers,cookies=cookie,verify=False)
+        else:
+            response = requests.get(url=url,data=params,headers=headers,cookies=cookie,verify=False)
         if get_cookie != None:
             cookie_value_jar = response.cookies
             # 工具方法转换成字典
             cookie_value = requests.utils.dict_from_cookiejar(cookie_value_jar)
             write_cookie(cookie_value,'/Config/cookie.json')
         res = response.text
+        if get_token != None:
+            token_value = response.headers
+            token = token_value["token"]
+            HandIni().write_value(token)
+
         return res
 
     def send_post(self,url,params,headers=None,cookie=None,get_cookie=None,token=None,get_token=None):
         if token != None:
-            headers = {json.dumps(headers)+"token":token}
-            print(headers)
+            headers["toekn"] = token
+            # print(headers)
             response = requests.post(url=url,json=params,headers=headers,cookies=cookie,verify=False)
         else:
             response = requests.post(url=url,json=params,headers=headers,cookies=cookie,verify=False)
@@ -38,13 +48,10 @@ class BaseRequest:
             cookie_value = requests.utils.dict_from_cookiejar(cookie_value_jar)
             write_cookie(cookie_value, '/Config/cookie.json')
 
-        if get_token != None:
-            token_value = response.json()
-            # print(token_value)
-            token = token_value["data"]["userInfo"]["token"]
-            # print(token)
-            # HandJson().write_value(token,'/Config/token.json')
-            HandIni().write_value(token)
+        # if get_token != None:
+        #     token_value = response.headers
+        #     token = token_value["token"]
+        #     HandIni().write_value(token)
         res = response.text
         return res
 

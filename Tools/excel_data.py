@@ -33,6 +33,7 @@ class ExcelData:
         cookie =None
         get_cookie = None
         token = None
+        get_token = None
         base_url = self.ini.get_value('server','host')
         row_num = self.excel.get_row()
         one = 0
@@ -60,13 +61,15 @@ class ExcelData:
                         cookie = None
                         get_cookie = None
                     token_method = self.excel.get_cell_value(one,8)
+                    print(token_method)
                     if token_method == 'yes':
                         token = HandIni().get_value('type', 'token', '/Config/token.ini')
+                        get_token =None
                     elif token_method == 'write':
-                        get_token = {"is_token": "app"}
+                        get_token = self.excel.get_cell_value(one,8)
                     else:
-                        token = None
-                        get_token = None
+                        token=None
+                        get_token =None
 
                     resList.append((case_name,url,method,data,header,cookie,get_cookie,token,get_token))
             one +=1

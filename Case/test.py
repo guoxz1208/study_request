@@ -7,11 +7,16 @@ import requests
 # print(token_value)
 
 
-url = "http://47.101.48.192:8001/api/login"
+# url = "http://47.101.48.192:8001/api/login"
 login_value = {"username": "admin", "password": "123456"}
-res = requests.post(url,json=login_value)
-text = res.json()
-print(text)
-print(json.dumps(text))
-token = res.headers
-print(token)
+token = "abcdefg"
+login_value["token"] = token
+print(login_value)
+
+
+# res = requests.post(url,json=login_value)
+# text = res.json()
+# print(text)
+# print(json.dumps(text))
+# token = res.headers
+# print(token)

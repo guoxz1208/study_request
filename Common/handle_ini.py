@@ -27,10 +27,15 @@ class HandIni:
         data = cf.get(section,option)
         return data
 
-    def write_value(self,key):
-        cf = self.read_ini()
+    def write_value(self,key,file_name=None):
+        if file_name == None:
+            file_path = base_path + '/Config/server.ini'
+        else:
+            file_path = base_path + file_name
+        cf = self.read_ini(file_path)
         list = []
         list = cf.sections()       # 获取到配置文件中所有分组名称
+        print(list)
         if 'type' not in list:
             cf.add_section('type')              # 添加分组名称
             cf.set('type', 'token', key)  # 给type分组设置值
@@ -45,4 +50,4 @@ class HandIni:
 
 if __name__ == '__main__':
     ini = HandIni()
-    print(ini.write_value())
+    print(ini.write_value("123123",'/Config/token.ini'))
