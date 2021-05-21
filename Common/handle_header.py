@@ -9,9 +9,16 @@ import os,sys
 base_path = os.path.abspath(os.path.join(os.getcwd(),'../'))
 sys.path.append(base_path)
 
-def read_header(file_name):
-    header_value = HandJson().read_json(file_name)
+def read_header():
+    header_value = HandJson().read_json('/Config/header.json')
     return header_value
 
+def write_header_token(key):
+    headers = read_header()
+    headers['token'] = key
+    return headers
+
 if __name__ == '__main__':
-    print(read_header('/Config/header.json'))
+    data = 'qwqweqweqwewqesdasda'
+    print(read_header())
+    print(write_header_token(data))

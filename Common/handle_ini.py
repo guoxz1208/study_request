@@ -22,12 +22,18 @@ class HandIni:
 
     # 读取配置文件ini内容
     # section：所属部分；option：内容选项
-    def get_value(self,section,option,file_name=None):
+    def get_value(self,section,option=None,file_name=None):
+        if option==None:
+            option='server'
         cf = self.read_ini(file_name)
-        data = cf.get(section,option)
+        try:
+            data = cf.get(section,option)
+        except:
+            print("没有获取到值")
+            data = None
         return data
 
-    def write_value(self,key,file_name=None):
+    def write_value(self,key,section,option,file_name=None):
         if file_name == None:
             file_path = base_path + '/Config/server.ini'
         else:
@@ -36,9 +42,9 @@ class HandIni:
         list = []
         list = cf.sections()       # 获取到配置文件中所有分组名称
         print(list)
-        if 'type' not in list:
-            cf.add_section('type')              # 添加分组名称
-            cf.set('type', 'token', key)  # 给type分组设置值
+        if section not in list:
+            cf.add_section(section)              # 添加分组名称
+            cf.set(section, option, key)  # 给type分组设置值
         # cf.remove_option('type', 'stuno')  # 删除type分组的stuno
         # cf.remove_section('tpye')  # 删除配置文件中type分组
         o = open(base_path+'/Config/token.ini', 'w')
@@ -49,5 +55,6 @@ class HandIni:
 
 
 if __name__ == '__main__':
-    ini = HandIni()
-    print(ini.write_value("123123",'/Config/token.ini'))
+    init = HandIni()
+    # print(init.write_value("123123",'/Config/token.ini'))
+    print(init.get_value('type','token','/Config/token.ini'))

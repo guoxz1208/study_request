@@ -7,7 +7,7 @@ from jsonpath_rw import jsonpath,parser
 import os
 import sys
 # base_path = os.getcwd()
-base_path = os.path.abspath(os.path.join(os.getcwd(),'../'))
+base_path = os.path.abspath(os.path.join(os.getcwd(), '../'))
 sys.path.append(base_path)
 
 class HandJson:

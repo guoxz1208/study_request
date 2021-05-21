@@ -31,27 +31,27 @@ class HandExcel:
         return excel_name
 
     # 读取Excel中sheet页
-    def read_sheet(self,SheetNum=None):
-        if SheetNum == None:
-            SheetNum =0
-        excel_sheet = self.read_excel().sheet_by_index(SheetNum)
+    def read_sheet(self,SheetName=None):
+        if SheetName == None:
+            SheetName = "Sheet1"
+        excel_sheet = self.read_excel().sheet_by_name(SheetName)
         return excel_sheet
 
     # 获取Excel中有效总行数
-    def get_row(self):
-        row_num = self.read_sheet().nrows
+    def get_row(self,SheetName=None):
+        row_num = self.read_sheet(SheetName).nrows
         return row_num
 
     # 获取Excel中有效总列数
-    def get_col(self):
-        col_num = self.read_sheet().ncols
+    def get_col(self,SheetName=None):
+        col_num = self.read_sheet(SheetName).ncols
         return col_num
 
     # 获取Excel中某一行的值
-    def get_row_value(self,number=None):
+    def get_row_value(self,SheetName=None,number=None):
         if number == None:
             number = 0
-        row_value = self.read_sheet().row_values(number)
+        row_value = self.read_sheet(SheetName).row_values(number)
         return row_value
 
     # 获取Excel中某一列的值
@@ -62,8 +62,8 @@ class HandExcel:
         return col_value
 
     # 获取Excel中某一个单元格的内容
-    def get_cell_value(self,row_num,col_num):
-        cell_value = self.read_sheet().cell_value(row_num,col_num)
+    def get_cell_value(self,row_num,col_num,SheetName=None):
+        cell_value = self.read_sheet(SheetName).cell_value(row_num,col_num)
         return cell_value
 
     # 写入excel文件中 date 数据，date是list数据类型， fields 表头
@@ -83,11 +83,11 @@ class HandExcel:
 if __name__ == '__main__':
     hand_excel = HandExcel()
     # print(hand_excel.read_excel())
-    # print(hand_excel.read_sheet("登录"))
+    print(hand_excel.read_sheet("test"))
     # print(hand_excel.get_row())
     # print(hand_excel.get_col())
     # print(hand_excel.get_row_value())
     # print(hand_excel.get_col_value(2))
     # print(hand_excel.get_cell_value(2,2))
-    data = {"uesrname":"admin"}
-    print(hand_excel.write_excel(10,1,json.dumps(data),1))
+    # data = {"uesrname":"admin"}
+    # print(hand_excel.write_excel(10,1,json.dumps(data),1))
